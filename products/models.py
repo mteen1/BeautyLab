@@ -11,7 +11,7 @@ class HairProduct(models.Model):
     name = models.CharField(max_length=255)
     brand = models.CharField(max_length=255)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.IntegerField()
     image = models.URLField(blank=True)
 
     # Hair type options (consider adding more as needed)

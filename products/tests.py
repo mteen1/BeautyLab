@@ -1,10 +1,3 @@
-from decimal import Decimal
-from django.test import TestCase
-from django.urls import reverse
-
-from .models import HairProduct
-
-
 from django.test import TestCase
 from .models import HairProduct
 
@@ -17,7 +10,7 @@ class HairProductTests(TestCase):
             name="Voluminous Mousse",
             brand="Acme Hair Co.",
             description="This lightweight mousse adds volume and body to your hair without stiffness.",
-            price=9.99,
+            price=100000,
             image="https://example.com/voluminous_mousse.jpg",
             hair_type="normal,fine",
             key_ingredients="Panthenol, Hydrolyzed Wheat Protein",
@@ -33,7 +26,7 @@ class HairProductTests(TestCase):
         self.assertEqual(hair_product.name, "Voluminous Mousse")
         self.assertEqual(hair_product.brand, "Acme Hair Co.")
         # Add assertions for other relevant fields as needed
-        self.assertEqual(hair_product.price, Decimal('9.99'))
+        self.assertEqual(hair_product.price, 100000)
         self.assertEqual(hair_product.hair_type, "normal,fine")
         self.assertEqual(hair_product.is_vegan, True)
 

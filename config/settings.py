@@ -40,10 +40,13 @@ DJANGO_APPS = [
 ]
 
 
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    "rest_framework"
+]
 
 LOCAL_APPS = [
     "products.apps.ProductsConfig",
+    "apis.apps.ApisConfig"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
