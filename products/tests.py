@@ -1,5 +1,4 @@
 from django.urls import reverse
-from rest_framework import status
 from rest_framework.test import APITestCase
 
 from products.models import HairProduct
@@ -26,7 +25,7 @@ class APITests(APITestCase):
 
     def test_hairproduct_list_view(self):
         """Test that the HairProduct API list view returns the correct data."""
-        url = reverse('HairProduct_list')  # Replace with your actual URL name
+        url = reverse('hairproduct_list')  # Replace with your actual URL name
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)  # Check for successful response (200 OK)
@@ -36,3 +35,9 @@ class APITests(APITestCase):
         serialized_data = HairProductSerializer(self.hairproduct).data
         self.assertDictEqual(response.data[0], serialized_data)
         self.assertContains(response, self.hairproduct)
+
+    def test_detail_view(self):
+        response = self.client.get(reverse("hairproduct_detail", kwargs={"pk": self.hairproduct.id}), format="json")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(HairProduct.objects.count(), 1)
+        self.assertContains(response, "Mousse")

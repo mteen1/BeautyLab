@@ -3,6 +3,11 @@ from .models import HairProduct
 from .serializers import HairProductSerializer
 
 
-class HairAPIView(generics.ListAPIView):
+class HairProductView(generics.ListAPIView):
+    queryset = HairProduct.objects.all()
+    serializer_class = HairProductSerializer
+
+
+class DetailHairProductView(generics.RetrieveAPIView):
     queryset = HairProduct.objects.all()
     serializer_class = HairProductSerializer

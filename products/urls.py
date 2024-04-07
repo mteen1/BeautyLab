@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import HairAPIView
+from .views import HairProductView, DetailHairProductView
 
 
 urlpatterns = [
-    path("", HairAPIView.as_view(), name="HairProduct_list")
+    path("<int:pk>/", DetailHairProductView.as_view(), name="hairproduct_detail"),
+    path("", HairProductView.as_view(), name="hairproduct_list"),
 ]
