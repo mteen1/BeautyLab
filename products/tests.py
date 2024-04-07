@@ -1,12 +1,16 @@
-from django.test import TestCase
-from .models import HairProduct
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase
+
+from products.models import HairProduct
+from .serializers import HairProductSerializer
 
 
-class HairProductTests(TestCase):
+class APITests(APITestCase):
     @classmethod
     def setUpTestData(cls):
         """Create sample HairProduct data for testing."""
-        HairProduct.objects.create(
+        cls.hairproduct = HairProduct.objects.create(
             name="Voluminous Mousse",
             brand="Acme Hair Co.",
             description="This lightweight mousse adds volume and body to your hair without stiffness.",
@@ -20,24 +24,15 @@ class HairProductTests(TestCase):
             size="8oz",
         )
 
-    def test_hairproduct_content(self):
-        """Test that a HairProduct object has the expected attributes."""
-        hair_product = HairProduct.objects.get(name="Voluminous Mousse")
-        self.assertEqual(hair_product.name, "Voluminous Mousse")
-        self.assertEqual(hair_product.brand, "Acme Hair Co.")
-        # Add assertions for other relevant fields as needed
-        self.assertEqual(hair_product.price, 100000)
-        self.assertEqual(hair_product.hair_type, "normal,fine")
-        self.assertEqual(hair_product.is_vegan, True)
+    def test_hairproduct_list_view(self):
+        """Test that the HairProduct API list view returns the correct data."""
+        url = reverse('HairProduct_list')  # Replace with your actual URL name
+        response = self.client.get(url)
 
-    def test_hairproduct_listview(self):
-        """Test that the hair product list view displays the correct content."""
-        # Simulate a GET request to the hair product list view (replace with your actual URL pattern)
-        response = self.client.get("/hair-products/")
-        self.assertEqual(
-            response.status_code, 200
-        )  # Check for successful response (200 OK)
-        self.assertContains(
-            response, "Voluminous Mousse"
-        )  # Check if product name is present in response
-        # Add assertions to check for other expected content in the response (e.g., descriptions, prices)
+        self.assertEqual(response.status_code, 200)  # Check for successful response (200 OK)
+        self.assertEqual(len(response.data), 1)  # Verify one HairProduct object returned
+
+        # Compare serialized data with expected data
+        serialized_data = HairProductSerializer(self.hairproduct).data
+        self.assertDictEqual(response.data[0], serialized_data)
+        self.assertContains(response, self.hairproduct)
