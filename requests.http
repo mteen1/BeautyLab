@@ -1,0 +1,10 @@
+POST http://localhost:8000/api/products/
+Content-Type: application/json
+
+{
+    "name": "client suggested product",
+    "ingredients": "good ones, other ones",
+    "description": "",
+    "skin_type": ""
+
+}

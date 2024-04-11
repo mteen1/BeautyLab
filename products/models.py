@@ -1,47 +1,43 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
+class Product(models.Model):
+    """details about the skincare products"""
 
-from django.db import models
-
-class HairProduct(models.Model):
-    """
-    Model representing a hair care product.
-    """
-
-    name = models.CharField(max_length=255)
-    brand = models.CharField(max_length=255)
-    description = models.TextField()
-    price = models.IntegerField()
-    image = models.URLField(blank=True)
-
-    # Hair type options (consider adding more as needed)
-    HAIR_TYPE_CHOICES = (
-        ('normal', 'Normal'),
-        ('dry', 'Dry'),
-        ('oily', 'Oily'),
-        ('curly', 'Curly'),
-        ('colored', 'Colored'),
+    name = models.CharField(_("نام محصول"), max_length=50)
+    description = models.TextField(_("توضیحات"), blank=True)
+    ingredients = models.CharField(_("مواد تشکیل دهنده"), max_length=50)
+    SKIN_TYPES = (
+        ("normal", "نرمال"),
+        ("dry", "خشک"),
+        ("oily", "چرب"),
+        ("combination", "ترکیبی"),
+        ("sensitive", "حساس"),
+        ("all", "همه پوست ها"),
     )
-    hair_type = models.CharField(max_length=20, choices=HAIR_TYPE_CHOICES)
+    skin_type = models.CharField(
+        _("برای پوست ها"), choices=SKIN_TYPES, max_length=50, default="all"
+    )
+    # slug = AutoSlugField from django extentions
 
-    # Key ingredients (comma-separated)
-    key_ingredients = models.CharField(max_length=255, blank=True)
-
-    # Benefits (consider using a ManyToMany relationship later)
-    benefits = models.CharField(max_length=255, blank=True)
-
-    is_vegan = models.BooleanField(default=False)
-    is_cruelty_free = models.BooleanField(default=False)
-
-    size = models.CharField(max_length=50, blank=True)
-    volume = models.CharField(max_length=50, blank=True)
-
-    # Additional fields (optional)
-    rating = models.FloatField(blank=True, null=True)
-    link = models.URLField(blank=True)
-    awards = models.CharField(max_length=255, blank=True)
+    slug = models.SlugField(_("آدرس url"))
+    draft = models.BooleanField(_("پیش نویس"), default=False)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.pk}"
 
 
+class Ingredients:
+    pass
+
+
+class Rating:
+    pass
+
+
+class Interaction:
+    pass
+
+
+class Recommendation:
+    pass
