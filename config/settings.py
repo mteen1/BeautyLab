@@ -44,8 +44,8 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = ["ninja", "corsheaders", "whitenoise.runserver_nostatic"]
 
 LOCAL_APPS = [
-    "products.apps.ProductsConfig",
-    "accounts.apps.AccountsConfig",
+    "products",
+    "accounts",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

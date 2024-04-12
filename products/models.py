@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 class Product(models.Model):
     """details about the skincare products"""
 
@@ -27,8 +28,24 @@ class Product(models.Model):
         return f"{self.name} - {self.pk}"
 
 
-class Ingredients:
-    pass
+class Ingredient(models.Model):
+    """different ingredients"""
+
+    name = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class SkinConcern(models.Model):
+    """skin concern objects"""
+    name = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+
 
 
 class Rating:
