@@ -23,7 +23,8 @@ class ProfileAdmin(admin.ModelAdmin):
     model = Profile
     list_display = [
         "id",
-        "user",
         "__str__",
         "skin_type",
     ]
+    list_filter = ('skin_type',)
+    search_fields = ('first_name',"last_name","id")

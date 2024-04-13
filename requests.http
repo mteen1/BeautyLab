@@ -2,9 +2,19 @@ POST http://localhost:8000/api/products/
 Content-Type: application/json
 
 {
-    "name": "client suggested product",
+    "name": "very nice product",
     "ingredients": "good ones, other ones",
     "description": "",
     "skin_type": ""
 
+}
+
+###
+POST http://localhost:8000/api/accounts/users/
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "string",
+  "email": "hello@yahoo.com"
 }

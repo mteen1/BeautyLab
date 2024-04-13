@@ -4,10 +4,12 @@ from django.utils.translation import gettext_lazy as _
 
 class CustomUser(AbstractUser):
     """custom user model"""
-    pass
-class Profile(models.Model):
     first_name = models.CharField(null=True, max_length=50)
     last_name = models.CharField(null=True, blank=True, max_length=50)
+    def __str__(self):
+        return f"{self.first_name} {self.last_name if self.last_name != None else ""}"
+class Profile(models.Model):
+
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     SKIN_TYPES = (
         ("NORM", "Normal"),
@@ -28,5 +30,5 @@ class Profile(models.Model):
     ing_sensitive = models.ManyToManyField('products.Ingredient', blank=True, related_name='sensitive_to_users')
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.user.first_name} {self.user.last_name if self.user.last_name != None else " - 'No last name' "}"
 
