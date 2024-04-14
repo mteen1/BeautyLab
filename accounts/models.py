@@ -7,7 +7,7 @@ class CustomUser(AbstractUser):
     first_name = models.CharField(null=True, max_length=50)
     last_name = models.CharField(null=True, blank=True, max_length=50)
     def __str__(self):
-        return f"{self.first_name} {self.last_name if self.last_name != None else ""}"
+        return f"{self.first_name} {self.last_name if self.last_name != None else ' '}"
 class Profile(models.Model):
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)

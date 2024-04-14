@@ -1,5 +1,17 @@
-from ninja import ModelSchema
+from ninja import ModelSchema, Schema
 from .models import Profile, CustomUser
+
+class AuthToken(Schema):
+    access_token: str
+    token_type: str
+
+
+class LoginSchema(Schema):
+    username: str
+    password: str
+
+
+
 
 
 class UserIn(ModelSchema):

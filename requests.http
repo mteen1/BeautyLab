@@ -18,3 +18,8 @@ Content-Type: application/json
   "password": "string",
   "email": "hello@yahoo.com"
 }
+
+
+###
+GET http://localhost:8000/api/accounts/jesus/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiZXhwIjoxNzEzMTk5Nzg5fQ.HVpr2jwbPlx_M3TbQo1ZT1T9jcBDX5vsJSj7grP36xk

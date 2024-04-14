@@ -157,3 +157,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CSRF_TRUSTED_ORIGINS = ["https://localhost:3000"]
 
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+
+ACCESS_TOKEN_SECRET_KEY = "your_unique_access_token_secret"
+REFRESH_TOKEN_SECRET_KEY = "your_unique_refresh_token_secret"
