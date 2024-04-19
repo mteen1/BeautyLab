@@ -1,7 +1,9 @@
-from ninja import Router
+import jwt.exceptions
+from ninja import Router, Body
 from django.contrib.auth import authenticate
 from .customjwt import TokenService
 from .schemas import AuthToken, LoginSchema
+import jwt
 
 router = Router()
 
@@ -13,20 +15,31 @@ def create_token(request, payload: LoginSchema):
     if not user:
         return router.api.create_response(request, {"detail": "Invalid credentials"})
 
-    token = TokenService.create_token(user.id)
-    return AuthToken(access_token=token, token_type="bearer")
+    token_data = TokenService.create_token(user.id)  # Get the dictionary
+    access_token = token_data["access_token"]  # Extract the access token string
+    refresh_token = token_data["refresh_token"]
+    return AuthToken(
+        access_token=access_token, refresh_token=refresh_token, token_type="bearer"
+    )
 
 
 @router.post("refresh/", response=AuthToken)
-def refresh_token(request, payload: LoginSchema):
+def refreshes_token(request, body: Body[dict] ):
     """refreshes access token using a refresh token"""
-    user = authenticate(username=payload.username, password=payload.password)
-    if not user:
-        return router.api.create_response(request, {"detail": "Invalid credentials"})
 
-    refresh__token = request.body.get('refresh_token')
-    if not refresh__token or not TokenService.verify_token(refresh__token, is_refresh=True):
-        return router.api.create_response(request, {"detail": "Invalid refresh token"})
+    refresh_token = body.get("refresh_token")
 
-    token = TokenService.create_token(user.id)
-    return AuthToken(access_token=token['access_token'], token_type="bearer")
+    try:
+        if not refresh_token or not TokenService.verify_token(
+            refresh_token, is_refresh=True
+        ):
+            return router.api.create_response(request, data={"detail": "Invalid refresh token"},status=401)
+    except jwt.exceptions.DecodeError:
+        return router.api.create_response(request, data={"detail": "Invalid refresh token"},status=401)
+    # No need to call authenticate since refresh token verifies identity
+    user_id = request.user.id
+    access_token = TokenService.create_access_token(user_id=user_id) 
+
+    # Return the new refresh token (optional)
+
+    return AuthToken(access_token=access_token, refresh_token=refresh_token, token_type="bearer")

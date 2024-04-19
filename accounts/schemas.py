@@ -2,7 +2,8 @@ from ninja import ModelSchema, Schema
 from .models import Profile, CustomUser
 
 class AuthToken(Schema):
-    access_token: str
+    access_token: str | None=None
+    refresh_token: str | None=None
     token_type: str
 
 

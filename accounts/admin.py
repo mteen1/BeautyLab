@@ -24,7 +24,8 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "__str__",
+        "related_name",
         "skin_type",
     ]
     list_filter = ('skin_type',)
-    search_fields = ('first_name',"last_name","id")
+    search_fields = ('first_name',"last_name","id", "related_name")

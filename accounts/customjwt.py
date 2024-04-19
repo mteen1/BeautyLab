@@ -7,6 +7,7 @@ from .models import CustomUser
 
 
 class TokenService:
+    """contains methods for creating & verifying tokens"""
     @staticmethod
     def create_access_token(user_id: int):
         payload = {"user_id": user_id, "exp": datetime.utcnow() + timedelta(hours=24)}
@@ -38,8 +39,12 @@ class TokenService:
             if not is_refresh
             else settings.REFRESH_TOKEN_SECRET_KEY
         )
-        payload = jwt.decode(token, secret_key, algorithms=["HS256"])
-        return payload
+        print(f"verifying the token  {token}")
+        try:
+            payload = jwt.decode(token, secret_key, algorithms=["HS256",])
+            return payload
+        except jwt.exceptions.ExpiredSignatureError:
+            return None
 
 
 class JWTAuth(HttpBearer):
@@ -54,3 +59,4 @@ class JWTAuth(HttpBearer):
                 return CustomUser.objects.get(id=user_id)
             except CustomUser.DoesNotExist:
                 return None
+        return None

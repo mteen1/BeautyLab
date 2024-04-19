@@ -14,12 +14,16 @@ POST http://localhost:8000/api/accounts/users/
 Content-Type: application/json
 
 {
-  "username": "test",
+  "username": "testt",
   "password": "string",
   "email": "hello@yahoo.com"
 }
 
 
 ###
-GET http://localhost:8000/api/accounts/jesus/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiZXhwIjoxNzEzMTk5Nzg5fQ.HVpr2jwbPlx_M3TbQo1ZT1T9jcBDX5vsJSj7grP36xk
+GET http://localhost:8000/api/accounts/profile/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MTM2MzAxODl9.BHu8aSn_sEKfQZDiA5Wr6SvO3eBtYLpWG88jIaVlMOA
+
+
+###
+GET http://localhost:8000/api/accounts/profiles/

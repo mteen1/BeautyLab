@@ -26,11 +26,22 @@ def create_user(request, user_data: UserIn):
     return {"message": "User created successfully"}
 
 
-@router.get("profiles/{id}/", response=ProfileDetailOut)
-def get_profile(request, id: int):
-    """get profile based on the id"""
-    return get_object_or_404(Profile, id=id)
+# @router.get("profiles/{id}/", response=ProfileDetailOut)
+# def get_profile(request, id: int):
+#     """get profile based on the id"""
+#     return get_object_or_404(Profile, id=id)
 
+@router.get("profile/", response=ProfileDetailOut, auth=JWTAuth())
+def get_profile(request):
+    """get profile based on the id"""
+    user = request.auth
+    return Profile.objects.get(user=user)
+
+
+
+@router.get("profiles/", response=list[ProfileDetailOut], auth=JWTAuth())
+def get_profiles(request):
+    return Profile.objects.all()
 
 @router.post("profiles/", auth=JWTAuth())
 def create_profile(request, profile_data: ProfileIn):

@@ -1,0 +1,21 @@
+POST http://localhost:8000/api/auth/token/
+Content-Type: application/json
+
+{
+  "username": "root",
+  "password": "123456789"
+}
+
+###
+
+GET http://localhost:8000/api/accounts/profiles/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjpudWxsLCJleHAiOjE3MTM1MzQ4MTN9.UomMYJzEIWQB9O19aBEyHPGYK-h2t5Irc_3kdC9SEOU
+
+
+###
+POST http://localhost:8000/api/auth/refresh/
+Content-Type: application/json
+
+{
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MTQxNTAxMTV9.H2UulHfhOIyimhmNBVdzY-IjGg3hee0oWCVj7B1xcfs"
+}
